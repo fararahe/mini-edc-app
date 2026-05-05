@@ -1,0 +1,14 @@
+# IntelliJ / Android Studio
+.idea/
+*.iml
+
+# Gradle
+.gradle/
+build/
+
+# Local config
+local.properties
+.env
+
+# OS junk
+.DS_Store
