@@ -3,8 +3,10 @@ package id.faradyna.miniedcapp.ui.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import id.faradyna.miniedcapp.domain.device.DeviceInfoProvider
-import id.faradyna.miniedcapp.domain.repository.AuthRepository
+import id.faradyna.miniedcapp.domain.usecase.GetDeviceInfoUseCase
+import id.faradyna.miniedcapp.domain.usecase.GetMerchantConfigUseCase
+import id.faradyna.miniedcapp.domain.usecase.IsActivatedUseCase
+import id.faradyna.miniedcapp.domain.usecase.LogoutUseCase
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -14,29 +16,30 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val authRepository: AuthRepository,
-    private val deviceInfoProvider: DeviceInfoProvider
+    private val isActivatedUseCase: IsActivatedUseCase,
+    private val getMerchantConfigUseCase: GetMerchantConfigUseCase,
+    private val getDeviceInfoUseCase: GetDeviceInfoUseCase,
+    private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
 
     val uiState: StateFlow<MainUiState> = combine(
-        authRepository.isActivated(),
-        authRepository.getMerchantName(),
-        authRepository.getTerminalId(),
-        authRepository.getMerchantId()
-    ) { isActivated, merchantName, terminalId, merchantId ->
+        isActivatedUseCase(),
+        getMerchantConfigUseCase()
+    ) { isActivated, merchantConfig ->
+        val deviceInfo = getDeviceInfoUseCase()
         MainUiState(
             isActivated = isActivated,
-            merchantName = merchantName,
-            terminalId = terminalId,
-            merchantId = merchantId,
-            deviceSn = deviceInfoProvider.getSerialNumber(),
-            deviceModel = deviceInfoProvider.getDeviceModel()
+            merchantName = merchantConfig.merchantName,
+            terminalId = merchantConfig.terminalId,
+            merchantId = merchantConfig.merchantId,
+            deviceSn = deviceInfo.serialNumber,
+            deviceModel = deviceInfo.model
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), MainUiState())
 
     fun logout() {
         viewModelScope.launch {
-            authRepository.logout()
+            logoutUseCase()
         }
     }
 }

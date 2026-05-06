@@ -8,9 +8,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -32,12 +34,16 @@ import id.faradyna.miniedcapp.ui.theme.MiniEDCMerchantAppTheme
 
 @Composable
 fun HomeScreen(
-    viewModel: MainViewModel = hiltViewModel()
+    viewModel: MainViewModel = hiltViewModel(),
+    onStartTransaction: () -> Unit,
+    onViewHistory: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
     HomeContent(
         uiState = uiState,
         onLogoutClick = viewModel::logout,
+        onStartTransaction = onStartTransaction,
+        onViewHistory = onViewHistory
     )
 
 }
@@ -46,6 +52,8 @@ fun HomeScreen(
 fun HomeContent(
     uiState: MainUiState,
     onLogoutClick: () -> Unit,
+    onStartTransaction: () -> Unit,
+    onViewHistory: () -> Unit
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -83,6 +91,25 @@ fun HomeContent(
             }
 
             Spacer(modifier = Modifier.height(32.dp))
+
+            Button(
+                onClick = onStartTransaction,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Start Transaction")
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedButton(
+                onClick = onViewHistory,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Transaction History")
+            }
+
+            Spacer(modifier = Modifier.height(32.dp))
+
             TextButton(
                 onClick = onLogoutClick,
                 modifier = Modifier.fillMaxWidth()
@@ -104,6 +131,8 @@ fun MainPreview() {
                 terminalId = "EDC-0001"
             ),
             onLogoutClick = {},
+            onStartTransaction = {},
+            onViewHistory = {}
         )
     }
 }

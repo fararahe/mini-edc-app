@@ -14,7 +14,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import id.faradyna.miniedcapp.ui.feature.activation.ActivationScreen
+import id.faradyna.miniedcapp.ui.feature.history.HistoryScreen
 import id.faradyna.miniedcapp.ui.feature.home.HomeScreen
+import id.faradyna.miniedcapp.ui.feature.sale.SaleScreen
 import id.faradyna.miniedcapp.ui.navigation.Screen
 import id.faradyna.miniedcapp.ui.theme.MiniEDCMerchantAppTheme
 
@@ -57,7 +59,28 @@ fun AppNavigation(startDestination: String) {
             )
         }
         composable(Screen.Home) {
-            HomeScreen()
+            HomeScreen(
+                onStartTransaction = {
+                    navController.navigate(Screen.Sale)
+                },
+                onViewHistory = {
+                    navController.navigate(Screen.History)
+                }
+            )
+        }
+        composable(Screen.Sale) {
+            SaleScreen(
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        composable(Screen.History) {
+            HistoryScreen(
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }
