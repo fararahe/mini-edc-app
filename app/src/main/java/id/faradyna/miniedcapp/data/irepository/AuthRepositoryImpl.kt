@@ -49,7 +49,7 @@ class AuthRepositoryImpl @Inject constructor(
 
             ActivationResult.Success(terminalId, merchantName, token)
         } else {
-            ActivationResult.Failed("Invalid activation code")
+            ActivationResult.Failed(FAILED_MESSAGE)
         }
     }
 
@@ -61,6 +61,7 @@ class AuthRepositoryImpl @Inject constructor(
         private const val MOCK_ACTIVATION_CODE = "123456"
         private const val MOCK_MERCHANT_NAME = "Toko Maju Jaya"
         private const val MOCK_TOKEN = "mock-token-123"
+        private const val FAILED_MESSAGE = "Invalid activation code"
     }
 
 }

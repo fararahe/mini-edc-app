@@ -51,6 +51,8 @@ dependencies {
         implementation(androidx.navigation.compose)
 
         testImplementation(junit)
+        testImplementation(mockk)
+        testImplementation(kotlinx.coroutines.test)
         androidTestImplementation(platform(androidx.compose.bom))
         androidTestImplementation(androidx.compose.ui.test.junit4)
         androidTestImplementation(androidx.espresso.core)
