@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">Mini EDC Merchant App</string>
+
+    <string name="title_terminal_activation">Terminal Activation</string>
+
+    <string name="label_terminal_id">Terminal ID</string>
+    <string name="hint_terminal_id">e.g. EDC-0001</string>
+
+    <string name="label_merchant_id">Merchant ID</string>
+    <string name="hint_merchant_id">e.g. MRC-12345</string>
+
+    <string name="label_activation_code">Activation Code</string>
+    <string name="hint_activation_code">6 digits code (123456)</string>
+
+    <string name="label_activate_terminal">Activate Terminal</string>
+
+    <string name="dummy_terminal_id">EDC-0001</string>
+    <string name="dummy_merchant_id">MRC-1234</string>
+    <string name="title_terminal_activated">Terminal Activated</string>
+    <string name="label_merchant">Merchant</string>
+    <string name="label_device_sn">Device SN</string>
+    <string name="label_model">Model</string>
 </resources>

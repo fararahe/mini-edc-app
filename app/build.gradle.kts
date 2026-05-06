@@ -48,6 +48,7 @@ dependencies {
 
         implementation(androidx.activity.compose)
         implementation(androidx.core.ktx)
+        implementation(androidx.navigation.compose)
 
         testImplementation(junit)
         androidTestImplementation(platform(androidx.compose.bom))
@@ -60,6 +61,7 @@ dependencies {
         // Hilt
         implementation(hilt.android)
         ksp(hilt.compiler)
+        implementation(androidx.hilt.navigation.compose)
 
         // Coroutines
         implementation(kotlinx.coroutines.android)
